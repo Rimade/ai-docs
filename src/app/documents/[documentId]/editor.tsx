@@ -3,6 +3,8 @@
 import StarterKit from '@tiptap/starter-kit';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
+import { Color } from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -38,6 +40,10 @@ export const Editor = () => {
 			StarterKit,
 			FontFamily,
 			TextStyle,
+			Highlight.configure({ multicolor: true }),
+			Color.configure({
+				types: ['textStyle'],
+			}),
 			Underline,
 			Table,
 			TableCell,

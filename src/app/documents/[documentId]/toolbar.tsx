@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
 import { cn } from '@/lib/utils';
+import { CirclePicker, SketchPicker, type ColorResult } from 'react-color';
+import { type Level } from '@tiptap/extension-heading';
 import {
 	BoldIcon,
 	ChevronDownIcon,
+	HighlighterIcon,
 	ItalicIcon,
 	ListTodoIcon,
 	LucideIcon,
@@ -25,29 +27,60 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-interface Props {
-	className?: string;
-}
 interface ToolbarButtonProps {
 	onClick?: () => void;
 	isActive?: boolean;
 	icon: LucideIcon;
 }
 
-const ToolbarButton: React.FC<ToolbarButtonProps> = ({
-	onClick,
-	isActive,
-	icon: Icon,
-}) => {
+const HighlightColorButton = () => {
+	const { editor } = useEditorStore();
+
+	const onChange = (color: ColorResult) => {
+		editor?.chain().focus().setHighlight({ color: color.hex }).run();
+	};
+
 	return (
-		<button
-			onClick={onClick}
-			className={cn(
-				'text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80',
-				isActive && 'bg-neutral-200/80'
-			)}>
-			<Icon className="size-4" />
-		</button>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<button className="text-sm h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden">
+					<HighlighterIcon className="size-4" />
+				</button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent className="p-2.5">
+				<SketchPicker onChange={onChange} />
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};
+
+const TextColorButton = () => {
+	const { editor } = useEditorStore();
+
+	const value = editor?.getAttributes('textStyle').color || '#000000';
+
+	const onChange = (color: ColorResult) => {
+		editor
+			?.chain()
+			.focus()
+			.extendMarkRange('textStyle')
+			.setMark('textStyle', { color: color.hex })
+			.run();
+		// editor?.chain().focus().setColor(color.hex).run();
+	};
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<button className="text-sm h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden">
+					<span className="text-sm select-none">A</span>
+					<div className="h-0.5 w-full" style={{ backgroundColor: value }} />
+				</button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent className="p-2.5">
+				<CirclePicker color={value} onChange={onChange} />
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 };
 
@@ -135,7 +168,7 @@ const HeadingLevelButton = () => {
 								editor
 									?.chain()
 									.focus()
-									.toggleHeading({ level: value as 1 | 2 | 3 | 4 | 5 | 6 })
+									.toggleHeading({ level: value as Level })
 									.run();
 							}
 						}}
@@ -153,7 +186,24 @@ const HeadingLevelButton = () => {
 	);
 };
 
-export const Toolbar: React.FC<Props> = ({ className }) => {
+const ToolbarButton: React.FC<ToolbarButtonProps> = ({
+	onClick,
+	isActive,
+	icon: Icon,
+}) => {
+	return (
+		<button
+			onClick={onClick}
+			className={cn(
+				'text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80',
+				isActive && 'bg-neutral-200/80'
+			)}>
+			<Icon className="size-4" />
+		</button>
+	);
+};
+
+export const Toolbar: React.FC<{ className?: string }> = ({ className }) => {
 	const { editor } = useEditorStore();
 	const sections: {
 		label: string;
@@ -249,8 +299,8 @@ export const Toolbar: React.FC<Props> = ({ className }) => {
 				<ToolbarButton key={section.label} {...section} />
 			))}
 
-			{/* TODO: Text color */}
-			{/* TODO: Highlight color */}
+			<TextColorButton />
+			<HighlightColorButton />
 			<Separator orientation="vertical" className="h-6 bg-neutral-300" />
 			{/* TODO: Link */}
 			{/* TODO: Image */}
