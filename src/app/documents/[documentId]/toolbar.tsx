@@ -36,6 +36,8 @@ interface ToolbarButtonProps {
 const HighlightColorButton = () => {
 	const { editor } = useEditorStore();
 
+	const value = editor?.getAttributes('highlight').color || '#FFFFFF';
+
 	const onChange = (color: ColorResult) => {
 		editor?.chain().focus().setHighlight({ color: color.hex }).run();
 	};
@@ -48,7 +50,7 @@ const HighlightColorButton = () => {
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="p-2.5">
-				<SketchPicker onChange={onChange} />
+				<SketchPicker color={value} onChange={onChange} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
