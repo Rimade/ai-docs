@@ -194,6 +194,25 @@ body {
 		font-size: 0.8rem;
 	}
 
+	/* Code and preformatted text styles */
+	code {
+		@apply bg-purple-100;
+		border-radius: 0.4rem;
+		@apply text-purple-900;
+		font-size: 0.85rem;
+		padding: 0.25em 0.3em;
+	}
+
+	/* Link styles */
+	a {
+		@apply text-purple-700;
+		cursor: pointer;
+
+		&:hover {
+			@apply underline;
+		}
+	}
+
 	/* Table-specific styling */
 	table {
 		border-collapse: collapse;
