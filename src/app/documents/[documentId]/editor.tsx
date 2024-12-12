@@ -5,7 +5,6 @@ import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
-import Code from '@tiptap/extension-code';
 import Link from '@tiptap/extension-link';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
@@ -43,10 +42,9 @@ export const Editor = () => {
 			Link.configure({
 				openOnClick: false,
 				autolink: true,
-				defaultProtocol: 'https://',
+				defaultProtocol: 'https://example.com',
 			}),
 			FontFamily,
-			Code,
 			TextStyle,
 			Highlight.configure({ multicolor: true }),
 			Color.configure({
