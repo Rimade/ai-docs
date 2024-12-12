@@ -7,6 +7,7 @@ import {
 	BoldIcon,
 	ChevronDownIcon,
 	HighlighterIcon,
+	ImageIcon,
 	ItalicIcon,
 	Link2Icon,
 	ListTodoIcon,
@@ -15,9 +16,11 @@ import {
 	PrinterIcon,
 	Redo2Icon,
 	RemoveFormattingIcon,
+	SearchIcon,
 	SpellCheckIcon,
 	UnderlineIcon,
 	Undo2Icon,
+	UploadIcon,
 } from 'lucide-react';
 import { useEditorStore } from '@/store/use-editor-store';
 import { Separator } from '@/components/ui/separator';
@@ -29,6 +32,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from '@/components/ui/dialog';
 
 interface ToolbarButtonProps {
 	onClick?: () => void;
@@ -63,6 +73,90 @@ const LinkButton = () => {
 				<Button onClick={() => onChange(value)}>Apply</Button>
 			</DropdownMenuContent>
 		</DropdownMenu>
+	);
+};
+
+const ImageButton = () => {
+	const { editor } = useEditorStore();
+
+	const [imageUrl, setImageUrl] = useState('');
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+	const onChange = (src: string) => {
+		editor?.chain().focus().setImage({ src }).run();
+	};
+
+	const onUpload = () => {
+		// Create an input element to select a file
+		const input = document.createElement('input');
+		input.type = 'file';
+		input.accept = 'image/*';
+
+		// Handle the file selection
+		input.onchange = (event) => {
+			const file = (event.target as HTMLInputElement)?.files?.[0];
+			if (!file) return;
+
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result as string;
+				if (result) {
+					editor?.chain().focus().setImage({ src: result }).run();
+				}
+			};
+			reader.readAsDataURL(file);
+		};
+
+		// Trigger the file input dialog
+		input.click();
+	};
+
+	const handleImageUrlSubmit = () => {
+		if (imageUrl) {
+			onChange(imageUrl);
+			setImageUrl('');
+			setIsDialogOpen(false);
+		}
+	};
+
+	return (
+		<>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<button className="text-sm h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden">
+						<ImageIcon className="size-4" />
+					</button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuItem onClick={onUpload}>
+						<UploadIcon className="mr-2 size-4" />
+						Upload
+					</DropdownMenuItem>
+					<DropdownMenuItem onClick={() => setIsDialogOpen(true)}>
+						<SearchIcon className="mr-2 size-4" />
+						Paste URL
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+
+			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+				<DialogContent aria-description="Insert image URL" aria-describedby={undefined}>
+					<DialogHeader>
+						<DialogTitle>Insert Image URL</DialogTitle>
+					</DialogHeader>
+					<Input
+						placeholder="Insert image URL"
+						value={imageUrl}
+						onChange={(e) => setImageUrl(e.target.value)}
+						onKeyDown={(e) => e.key === 'Enter' && handleImageUrlSubmit()}
+					/>
+
+					<DialogFooter>
+						<Button onClick={handleImageUrlSubmit}>Insert</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+		</>
 	);
 };
 
@@ -338,7 +432,7 @@ export const Toolbar: React.FC<{ className?: string }> = ({ className }) => {
 			<HighlightColorButton />
 			<Separator orientation="vertical" className="h-6 bg-neutral-300" />
 			<LinkButton />
-			{/* TODO: Image */}
+			<ImageButton />
 			{/* TODO: Align */}
 			{/* TODO: Line height */}
 			{/* TODO: List */}
