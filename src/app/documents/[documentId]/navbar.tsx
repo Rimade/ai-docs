@@ -48,31 +48,39 @@ export const Navbar = () => {
 		editor?.chain().focus().insertTable({ rows, cols, withHeaderRow: false }).run();
 	};
 
+	const handleError = (context: string, error: unknown) => {
+		console.error(`${context}:`, error);
+		displayError(`${context}. Please try again.`);
+	};
+
+	const validateEditor = (editor: any) => {
+		if (!editor) {
+			throw new Error('Editor is not defined.');
+		}
+	};
+
+	const displayError = (message: string) => {
+		console.log(message); // Replace this with a non-intrusive UI notification system, e.g., a toast message.
+	};
+
 	const downloadFile = async (content: string, type: string, filename: string) => {
 		try {
 			if (!content) {
 				throw new Error('Content is empty or invalid.');
 			}
 
-			// Добавляем проверку размера файла
 			const fileSizeInMB = new Blob([content]).size / (1024 * 1024);
 			if (fileSizeInMB > 10) {
-				// Ограничение в 10MB
 				throw new Error('File size exceeds 10MB limit');
 			}
 
-			// Добавляем timestamp к имени файла
 			const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 			const filenameWithTimestamp = `${filename.split('.')[0]}_${timestamp}.${
 				filename.split('.')[1]
 			}`;
 
-			// Создаем и скачиваем файл
 			const blob = new Blob([content], { type });
 			saveAs(blob, filenameWithTimestamp);
-
-			// Добавляем уведомление об успешном скачивании
-			console.log(`File ${filenameWithTimestamp} downloaded successfully`);
 		} catch (error) {
 			handleError('Error downloading file', error);
 		}
@@ -113,7 +121,6 @@ export const Navbar = () => {
 
 			doc.setFontSize(options.fontSize);
 
-			// Добавляем метаданные в PDF
 			doc.setProperties({
 				title: filename,
 				subject: 'Document Export',
@@ -165,7 +172,6 @@ export const Navbar = () => {
 				throw new Error('No content available to save.');
 			}
 
-			// Добавляем базовые стили для HTML
 			const styledContent = `
 				<!DOCTYPE html>
 				<html>
@@ -211,21 +217,6 @@ export const Navbar = () => {
 		} catch (error) {
 			handleError('Error saving text', error);
 		}
-	};
-
-	const validateEditor = (editor: any) => {
-		if (!editor) {
-			throw new Error('Editor is not defined.');
-		}
-	};
-
-	const handleError = (context: string, error: unknown) => {
-		console.error(`${context}:`, error);
-		displayError(`${context}. Please try again.`);
-	};
-
-	const displayError = (message: string) => {
-		console.log(message); // Replace this with a non-intrusive UI notification system, e.g., a toast message.
 	};
 
 	return (
