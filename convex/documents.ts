@@ -54,3 +54,9 @@ export const updateDocument = mutation(
 		});
 	}
 );
+
+export const deleteDocument = mutation(
+	async ({ db }, { id }: { id: Id<'documents'> }) => {
+		return await db.delete(id);
+	}
+);
