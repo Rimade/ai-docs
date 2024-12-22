@@ -7,8 +7,8 @@ import { PlusIcon } from 'lucide-react';
 export default function Navbar() {
 	return (
 		<nav className="flex justify-between items-center h-full w-full">
-			<Link href="/" className="flex gap-1 items-center shrink-0 pr-6">
-				<Image src="/logo.png" alt="Lazy Docs" width={36} height={36} />
+			<Link href="/" className="flex gap-2 items-center shrink-0 pr-6">
+				<Image src="/icon.ico" alt="Lazy Docs" width={36} height={36} />
 				<h3 className="text-xl font-normal">Документы</h3>
 			</Link>
 			<SearchInput />

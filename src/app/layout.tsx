@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 	title: 'Lazy Docs',
 	description: 'Lazy Docs is a simple document editor',
 	icons: {
-		icon: '/favicon.ico',
+		icon: '/icons/icon.ico',
 	},
 };
 
