@@ -3,11 +3,13 @@ import { Navbar } from './navbar';
 import { Toolbar } from './toolbar';
 
 interface DocumentPageProps {
-	params: Promise<{ documentId: string }>;
+	params: { documentId: string };
 }
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
-	const { documentId } = await params;
+	const { documentId } = params;
+
+	console.log(documentId);
 
 	return (
 		<div className="min-h-screen bg-[#FAFBFD]">
