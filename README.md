@@ -30,7 +30,7 @@
 1. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/Rimade/google-docs.git
+git clone https://github.com/Rimade/lazy-docs.gitс
 ```
 
 2. Установите зависимости:
