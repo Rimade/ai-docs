@@ -6,16 +6,51 @@ export const getDocuments = query(async ({ db }) => {
 });
 
 export const createDocument = mutation(
-	async ({ db }, { title, content }: { title: string; content: string }) => {
-		return await db.insert('documents', { title, content });
+	async (
+		{ db },
+		{
+			title,
+			initialContent,
+			ownerId,
+			organizationId,
+		}: {
+			title: string;
+			initialContent: string;
+			ownerId: string;
+			organizationId: string;
+		}
+	) => {
+		return await db.insert('documents', {
+			title,
+			initialContent,
+			ownerId,
+			organizationId,
+		});
 	}
 );
 
 export const updateDocument = mutation(
 	async (
 		{ db },
-		{ id, title, content }: { id: Id<'documents'>; title: string; content: string }
+		{
+			id,
+			title,
+			initialContent,
+			ownerId,
+			organizationId,
+		}: {
+			id: Id<'documents'>;
+			title: string;
+			initialContent: string;
+			ownerId: string;
+			organizationId: string;
+		}
 	) => {
-		return await db.patch(id, { title, content });
+		return await db.patch(id, {
+			title,
+			initialContent,
+			ownerId,
+			organizationId,
+		});
 	}
 );

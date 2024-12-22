@@ -11,7 +11,8 @@ export default defineSchema({
 	})
 		.index('by_owner_id', ['ownerId'])
 		.index('by_organization_id', ['organizationId'])
-		.searchIndex('search_documents', { searchField: 'title' }),
+		.searchIndex('search_title', {
+			searchField: 'title',
+			filterFields: ['organizationId', 'ownerId'],
+		}),
 });
-
-// ownerId: v.id('users'),
