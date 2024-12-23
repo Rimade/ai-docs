@@ -40,6 +40,19 @@ import {
 import { BsFilePdf } from 'react-icons/bs';
 import { DocumentInput } from './document-input';
 import { useEditorStore } from '@/store/use-editor-store';
+import { Editor } from '@tiptap/react';
+
+interface PDFOptions {
+	orientation: 'portrait' | 'landscape';
+	fontSize: number;
+	pageSize?: string;
+	margins?: {
+		top: number;
+		right: number;
+		bottom: number;
+		left: number;
+	};
+}
 
 export const Navbar = () => {
 	const { editor } = useEditorStore();
@@ -53,9 +66,9 @@ export const Navbar = () => {
 		displayError(`${context}. Please try again.`);
 	};
 
-	const validateEditor = (editor: any) => {
+	const validateEditor = (editor: Editor | null, message: string) => {
 		if (!editor) {
-			throw new Error('Editor is not defined.');
+			throw new Error(message);
 		}
 	};
 
@@ -65,9 +78,7 @@ export const Navbar = () => {
 
 	const downloadFile = async (content: string, type: string, filename: string) => {
 		try {
-			if (!content) {
-				throw new Error('Content is empty or invalid.');
-			}
+			validateEditor(editor, 'Content is empty or invalid.');
 
 			const fileSizeInMB = new Blob([content]).size / (1024 * 1024);
 			if (fileSizeInMB > 10) {
@@ -86,18 +97,6 @@ export const Navbar = () => {
 		}
 	};
 
-	interface PDFOptions {
-		orientation: 'portrait' | 'landscape';
-		fontSize: number;
-		pageSize?: string;
-		margins?: {
-			top: number;
-			right: number;
-			bottom: number;
-			left: number;
-		};
-	}
-
 	const generatePDF = async (
 		content: string,
 		filename: string,
@@ -109,9 +108,7 @@ export const Navbar = () => {
 		}
 	) => {
 		try {
-			if (!content) {
-				throw new Error('Content is empty or invalid.');
-			}
+			validateEditor(editor!, 'Editor is not defined.');
 
 			const doc = new jsPDF({
 				orientation: options.orientation,
@@ -147,9 +144,9 @@ export const Navbar = () => {
 		}
 	};
 
-	const saveJSON = async (editor: any) => {
+	const saveJSON = async (editor: Editor) => {
 		try {
-			validateEditor(editor);
+			validateEditor(editor, 'Editor is not defined.');
 			const content = editor.getJSON();
 			if (!content) {
 				throw new Error('No content available to save.');
@@ -164,9 +161,9 @@ export const Navbar = () => {
 		}
 	};
 
-	const saveHTML = async (editor: any) => {
+	const saveHTML = async (editor: Editor) => {
 		try {
-			validateEditor(editor);
+			validateEditor(editor, 'Editor is not defined.');
 			const content = editor.getHTML();
 			if (!content) {
 				throw new Error('No content available to save.');
@@ -193,9 +190,9 @@ export const Navbar = () => {
 		}
 	};
 
-	const savePDF = async (editor: any) => {
+	const savePDF = async (editor: Editor) => {
 		try {
-			validateEditor(editor);
+			validateEditor(editor, 'Editor is not defined.');
 			const content = editor.getHTML();
 			if (!content) {
 				throw new Error('No content available to generate PDF.');
@@ -206,9 +203,9 @@ export const Navbar = () => {
 		}
 	};
 
-	const saveText = async (editor: any) => {
+	const saveText = async (editor: Editor) => {
 		try {
-			validateEditor(editor);
+			validateEditor(editor, 'Editor is not defined.');
 			const content = editor.getText();
 			if (!content) {
 				throw new Error('No content available to save as text.');
@@ -240,19 +237,19 @@ export const Navbar = () => {
 											Save
 										</MenubarSubTrigger>
 										<MenubarSubContent>
-											<MenubarItem onClick={() => saveJSON(editor)}>
+											<MenubarItem onClick={() => editor && saveJSON(editor)}>
 												<FileJsonIcon className="size-4 mr-2" />
 												JSON
 											</MenubarItem>
-											<MenubarItem onClick={() => saveHTML(editor)}>
+											<MenubarItem onClick={() => editor && saveHTML(editor)}>
 												<GlobeIcon className="size-4 mr-2" />
 												HTML
 											</MenubarItem>
-											<MenubarItem onClick={() => savePDF(editor)}>
+											<MenubarItem onClick={() => editor && savePDF(editor)}>
 												<BsFilePdf className="size-4 mr-2" />
 												PDF
 											</MenubarItem>
-											<MenubarItem onClick={() => saveText(editor)}>
+											<MenubarItem onClick={() => editor && saveText(editor)}>
 												<FileTextIcon className="size-4 mr-2" />
 												Text
 											</MenubarItem>

@@ -1,62 +1,50 @@
-import { Id } from './_generated/dataModel';
+import { v } from 'convex/values';
 import { mutation, query } from './_generated/server';
+import { paginationOptsValidator } from 'convex/server';
 
-export const getDocuments = query(async ({ db }) => {
-	return await db.query('documents').collect();
+export const get = query({
+	args: { paginationOpts: paginationOptsValidator },
+	handler: async (ctx, args) => {
+		return await ctx.db.query('documents').paginate(args.paginationOpts);
+	},
 });
 
-export const createDocument = mutation(
-	async (
-		{ db },
-		{
-			title,
-			initialContent,
-			ownerId,
-			organizationId,
-		}: {
-			title: string;
-			initialContent: string;
-			ownerId: string;
-			organizationId: string;
-		}
-	) => {
-		return await db.insert('documents', {
-			title,
-			initialContent,
-			ownerId,
-			organizationId,
-		});
-	}
-);
+export const create = mutation({
+	args: {
+		title: v.optional(v.string()),
+		initialContent: v.optional(v.string()),
+	},
+	handler: async (ctx, args) => {
+		const user = await ctx.auth.getUserIdentity();
+		if (!user) throw new Error('User not found');
 
-export const updateDocument = mutation(
-	async (
-		{ db },
-		{
-			id,
-			title,
-			initialContent,
-			ownerId,
-			organizationId,
-		}: {
-			id: Id<'documents'>;
-			title: string;
-			initialContent: string;
-			ownerId: string;
-			organizationId: string;
-		}
-	) => {
-		return await db.patch(id, {
-			title,
-			initialContent,
-			ownerId,
-			organizationId,
+		return await ctx.db.insert('documents', {
+			title: args.title ?? 'Untitled Document',
+			initialContent: args.initialContent,
+			ownerId: user.subject,
 		});
-	}
-);
+	},
+});
 
-export const deleteDocument = mutation(
-	async ({ db }, { id }: { id: Id<'documents'> }) => {
-		return await db.delete(id);
-	}
-);
+export const update = mutation({
+	args: {
+		id: v.id('documents'),
+		title: v.string(),
+		initialContent: v.string(),
+	},
+	handler: async (ctx, args) => {
+		return await ctx.db.patch(args.id, {
+			title: args.title,
+			initialContent: args.initialContent,
+		});
+	},
+});
+
+export const remove = mutation({
+	args: {
+		id: v.id('documents'),
+	},
+	handler: async (ctx, args) => {
+		return await ctx.db.delete(args.id);
+	},
+});
