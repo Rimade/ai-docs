@@ -73,32 +73,7 @@ export const Editor = () => {
 		],
 		autofocus: true,
 		immediatelyRender: false,
-		content: `
-        <table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th colspan="3">Description</th>
-            </tr>
-            <tr>
-              <td>Cyndi Lauper</td>
-              <td>Singer</td>
-              <td>Songwriter</td>
-              <td>Actress</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p>This is a basic example of implementing images. Drag to re-order.</p>
-        <img src="https://placehold.co/800x400" />
-
-        <p>
-          Wow, this editor has support for links to the whole <a href="https://en.wikipedia.org/wiki/World_Wide_Web">world wide web</a>. We tested a lot of URLs and I think you can add *every URL* you want. Isn’t that cool? Let’s try <a href="https://statamic.com/">another one!</a> Yep, seems to work.
-        </p>
-        <p>
-          By default every link will get a <code>rel="noopener noreferrer nofollow"</code> attribute. It’s configurable though.
-        </p>
-      `,
+		content: '',
 	});
 
 	return (
