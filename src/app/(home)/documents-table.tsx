@@ -69,7 +69,7 @@ export default function DocumentsTable({
 					) : status === 'LoadingMore' ? (
 						<Loader2 className="size-4 animate-spin" />
 					) : (
-						'End of results'
+						!documents && 'End of results'
 					)}
 				</Button>
 			</div>
