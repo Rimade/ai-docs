@@ -11,7 +11,7 @@ export default function Navbar() {
 				<h3 className="text-xl font-normal">Документы</h3>
 			</Link>
 			<SearchInput />
-			<div className="flex gap-3 items-center shrink-0 pr-6">
+			<div className="flex gap-3 items-center shrink-0">
 				<UserButton />
 			</div>
 		</nav>
