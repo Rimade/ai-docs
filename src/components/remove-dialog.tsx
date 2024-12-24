@@ -56,7 +56,10 @@ export function RemoveDialog({ documentId, children }: RemoveDialogProps) {
 					<AlertDialogCancel onClick={(e) => e.stopPropagation()}>
 						Cancel
 					</AlertDialogCancel>
-					<AlertDialogAction onClick={(e) => onRemove(e)} disabled={isRemoving}>
+					<AlertDialogAction
+						className="bg-red-500 hover:bg-red-600"
+						onClick={onRemove}
+						disabled={isRemoving}>
 						Delete
 					</AlertDialogAction>
 				</AlertDialogFooter>

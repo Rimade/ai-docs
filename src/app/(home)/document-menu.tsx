@@ -26,7 +26,11 @@ export function DocumentMenu({ documentId, title, onNewTab }: DocumentMenuProps)
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent>
-				<DropdownMenuItem onClick={() => onNewTab(documentId)}>
+				<DropdownMenuItem
+					onClick={(e) => {
+						e.stopPropagation();
+						onNewTab(documentId);
+					}}>
 					<ExternalLinkIcon className="size-4 mr-1" />
 					Open in new tab
 				</DropdownMenuItem>

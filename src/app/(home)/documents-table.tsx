@@ -10,7 +10,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { LoaderIcon } from 'lucide-react';
+import { Loader2, LoaderIcon } from 'lucide-react';
 import DocumentRow from './document-row';
 
 interface DocumentsTableProps {
@@ -57,6 +57,22 @@ export default function DocumentsTable({
 					<LoaderIcon className="size-5 text-muted-foreground animate-spin" />
 				</div>
 			)}
+
+			<div className="flex items-center justify-center">
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => loadMore(5)}
+					disabled={status !== 'CanLoadMore'}>
+					{status === 'CanLoadMore' ? (
+						'Load more'
+					) : status === 'LoadingMore' ? (
+						<Loader2 className="size-4 animate-spin" />
+					) : (
+						'End of results'
+					)}
+				</Button>
+			</div>
 		</div>
 	);
 }

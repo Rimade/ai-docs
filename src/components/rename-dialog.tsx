@@ -23,23 +23,30 @@ interface RenameDialogProps {
 }
 
 export function RenameDialog({ children, documentId, initialTitle }: RenameDialogProps) {
+	const update = useMutation(api.documents.updateById);
 	const [isOpen, setIsOpen] = useState(false);
 	const [isUpdating, setIsUpdating] = useState(false);
-	const [title, setTitle] = useState(initialTitle || '');
-	const update = useMutation(api.documents.updateById);
+	const [title, setTitle] = useState(initialTitle);
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsUpdating(true);
-		await update({ id: documentId, title });
-		setIsUpdating(false);
-		setIsOpen(false);
+		update({ id: documentId, title: title.trim() || 'Untitled' })
+			.then(() => {
+				setIsOpen(false);
+			})
+			.catch((error) => {
+				console.error(error);
+			})
+			.finally(() => {
+				setIsUpdating(false);
+			});
 	};
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>{children}</DialogTrigger>
-			<DialogContent>
+			<DialogContent onClick={(e) => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle>Rename document</DialogTitle>
 					<DialogDescription>Enter a new title for your document.</DialogDescription>
@@ -51,11 +58,22 @@ export function RenameDialog({ children, documentId, initialTitle }: RenameDialo
 						onChange={(e) => setTitle(e.target.value)}
 					/>
 					<DialogFooter className="flex justify-end">
-						<Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+						<Button
+							type="button"
+							variant="outline"
+							disabled={isUpdating}
+							onClick={(e) => {
+								e.stopPropagation();
+								setIsOpen(false);
+							}}>
 							Cancel
 						</Button>
-						<Button type="submit" disabled={!title || isUpdating}>
-							{isUpdating ? 'Updating...' : 'Rename'}
+						<Button
+							variant="default"
+							type="submit"
+							onClick={(e) => e.stopPropagation()}
+							disabled={!title || isUpdating}>
+							{isUpdating ? 'Saving...' : 'Save'}
 						</Button>
 					</DialogFooter>
 				</form>

@@ -12,7 +12,7 @@ export default function Home() {
 		api.documents.get,
 		{},
 		{
-			initialNumItems: 10,
+			initialNumItems: 5,
 		}
 	);
 
