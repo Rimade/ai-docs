@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { Toaster } from '@/components/ui/sonner';
 
 import './globals.css';
 import { ConvexClientProvider } from '@/components/convex-client-provider';
@@ -25,7 +26,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body suppressHydrationWarning={true} className={`${inter.className} antialiased`}>
 				<ConvexClientProvider>
-					<NuqsAdapter>{children}</NuqsAdapter>
+					<NuqsAdapter>
+						{children}
+						<Toaster />
+					</NuqsAdapter>
 				</ConvexClientProvider>
 			</body>
 		</html>

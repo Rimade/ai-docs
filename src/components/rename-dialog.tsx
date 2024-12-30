@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 import {
 	Dialog,
 	DialogContent,
@@ -33,9 +34,11 @@ export function RenameDialog({ children, documentId, initialTitle }: RenameDialo
 		setIsUpdating(true);
 		update({ id: documentId, title: title.trim() || 'Untitled' })
 			.then(() => {
+				toast.success('Document renamed');
 				setIsOpen(false);
 			})
 			.catch((error) => {
+				toast.error('Failed to rename document');
 				console.error(error);
 			})
 			.finally(() => {
