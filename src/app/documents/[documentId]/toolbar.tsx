@@ -630,8 +630,8 @@ export const Toolbar: React.FC<{ className?: string }> = ({ className }) => {
 			{
 				label: 'Comment',
 				icon: MessageSquarePlusIcon,
-				onClick: () => console.log('TODO comment'),
-				isActive: false, // TODO implement
+				onClick: () => editor?.chain().focus().addPendingComment().run(),
+				isActive: editor?.isActive('liveblocksCommentMark'),
 			},
 			{
 				label: 'List Todo',

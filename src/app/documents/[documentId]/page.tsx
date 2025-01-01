@@ -1,5 +1,6 @@
 import { Editor } from './editor';
 import { Navbar } from './navbar';
+import { Room } from './room';
 import { Toolbar } from './toolbar';
 
 interface DocumentPageProps {
@@ -17,7 +18,11 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
 				<Navbar />
 				<Toolbar />
 			</div>
-			<Editor />
+			<div className="print:pt-0 mt-1">
+				<Room>
+					<Editor />
+				</Room>
+			</div>
 		</div>
 	);
 }

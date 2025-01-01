@@ -48,11 +48,14 @@ export const LineHeightExtension = Extension.create({
 					const { from, to } = selection;
 
 					state.doc.nodesBetween(from, to, (node, pos) => {
-						if (this.options.types.includes(node.type.name)) {
+						if (
+							this.options.types.includes(node.type.name) &&
+							node.type.spec.inlineContent
+						) {
 							tr = tr.setNodeMarkup(pos, null, { ...node.attrs, lineHeight });
 						}
 					});
-					// dispatch?.(tr);
+
 					dispatch && dispatch(tr);
 
 					return true;
