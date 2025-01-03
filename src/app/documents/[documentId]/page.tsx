@@ -8,21 +8,20 @@ interface DocumentPageProps {
 }
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
-	const { documentId } = await params;
+	const documentId = await params.documentId;
 
 	console.log(documentId);
-
 	return (
-		<div className="min-h-screen bg-[#FAFBFD]">
-			<div className="flex flex-col px-4 pt-2 gap-y-2 sticky top-0 left-0 right-0 z-10 bg-[#FAFBFD] print:hidden">
-				<Navbar />
-				<Toolbar />
-			</div>
-			<div className="print:pt-0 mt-1">
-				<Room>
+		<Room>
+			<div className="min-h-screen bg-[#FAFBFD]">
+				<div className="flex flex-col px-4 pt-2 gap-y-2 sticky top-0 left-0 right-0 z-10 bg-[#FAFBFD] print:hidden">
+					<Navbar />
+					<Toolbar />
+				</div>
+				<div className="print:pt-0 mt-1">
 					<Editor />
-				</Room>
+				</div>
 			</div>
-		</div>
+		</Room>
 	);
 }
