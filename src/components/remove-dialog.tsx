@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useMutation } from 'convex/react';
 import { Id } from '../../convex/_generated/dataModel';
+import { toast } from 'sonner';
 import { api } from '../../convex/_generated/api';
 import {
 	AlertDialog,
@@ -15,6 +16,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from './ui/alert-dialog';
+import { ConvexError } from 'convex/values';
 
 interface RemoveDialogProps {
 	documentId: Id<'documents'>;
@@ -23,20 +25,19 @@ interface RemoveDialogProps {
 
 export function RemoveDialog({ documentId, children }: RemoveDialogProps) {
 	const remove = useMutation(api.documents.removeById);
-	const update = useMutation(api.documents.updateById);
 	const [isRemoving, setIsRemoving] = useState(false);
-	const [isRenaming, setIsRenaming] = useState(false);
 
 	const onRemove = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setIsRemoving(true);
-		await remove({ id: documentId });
-		setIsRemoving(false);
-	};
-
-	const onRename = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
-		setIsRenaming(true);
+		try {
+			await remove({ id: documentId });
+			toast.success('Document successfully removed');
+		} catch (error) {
+			toast.error('Something went wrong');
+		} finally {
+			setIsRemoving(false);
+		}
 	};
 
 	return (

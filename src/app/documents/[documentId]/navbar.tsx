@@ -41,6 +41,14 @@ import { BsFilePdf } from 'react-icons/bs';
 import { DocumentInput } from './document-input';
 import { useEditorStore } from '@/store/use-editor-store';
 import { Editor } from '@tiptap/react';
+import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
+import {
+	TooltipContent,
+	TooltipTrigger,
+	Tooltip,
+	TooltipProvider,
+} from '@/components/ui/tooltip';
+import { Avatars } from './avatars';
 
 interface PDFOptions {
 	orientation: 'portrait' | 'landscape';
@@ -366,6 +374,34 @@ export const Navbar = () => {
 						</Menubar>
 					</div>
 				</div>
+			</div>
+			<div className="flex gap-3 items-center shrink-0 pl-6">
+				<TooltipProvider>
+					<Tooltip>
+						<Avatars />
+						<TooltipTrigger>
+							<OrganizationSwitcher
+								afterCreateOrganizationUrl="/"
+								afterLeaveOrganizationUrl="/"
+								afterSelectOrganizationUrl="/"
+								afterSelectPersonalUrl="/"
+							/>
+						</TooltipTrigger>
+						<TooltipContent>
+							<p>Переключить организацию</p>
+						</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
+				<TooltipProvider>
+					<Tooltip>
+						<TooltipTrigger>
+							<UserButton />
+						</TooltipTrigger>
+						<TooltipContent>
+							<p>Профиль пользователя</p>
+						</TooltipContent>
+					</Tooltip>
+				</TooltipProvider>
 			</div>
 		</nav>
 	);
