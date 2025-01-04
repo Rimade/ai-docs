@@ -49,6 +49,7 @@ import {
 	TooltipProvider,
 } from '@/components/ui/tooltip';
 import { Avatars } from './avatars';
+import { Inbox } from './inbox';
 
 interface PDFOptions {
 	orientation: 'portrait' | 'landscape';
@@ -379,6 +380,7 @@ export const Navbar = () => {
 				<TooltipProvider>
 					<Tooltip>
 						<Avatars />
+						<Inbox />
 						<TooltipTrigger>
 							<OrganizationSwitcher
 								afterCreateOrganizationUrl="/"
