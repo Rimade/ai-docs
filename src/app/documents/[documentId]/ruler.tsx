@@ -1,16 +1,34 @@
 import { cn } from '@/lib/utils';
 import { useRef, useState } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
+import { useStorage, useMutation } from '@liveblocks/react/suspense';
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
 export const Ruler = () => {
-	const [leftMargin, setLeftMargin] = useState(56);
-	const [rightMargin, setRightMargin] = useState(56);
-
 	const [isDraggingLeft, setIsDraggingLeft] = useState(false);
 	const [isDraggingRight, setIsDraggingRight] = useState(false);
 	const rulerRef = useRef<HTMLDivElement>(null);
+	const leftMargin = useStorage((root) => root.leftMargin) ?? 56;
+	const rightMargin = useStorage((root) => root.rightMargin) ?? 56;
+
+	const setLeftMargin = useMutation(
+		({ storage }, position: number) => {
+			if (position > 0) storage.set('leftMargin', position);
+		},
+		[leftMargin]
+	);
+
+	const setRightMargin = useMutation(
+		({ storage }, position: number) => {
+			if (position > 0) storage.set('rightMargin', position);
+		},
+		[rightMargin]
+	);
+
+	if (!leftMargin || !rightMargin) {
+		return null;
+	}
 
 	const handleLeftMouseDown = () => {
 		setIsDraggingLeft(true);

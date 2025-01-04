@@ -8,7 +8,7 @@ interface DocumentPageProps {
 }
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
-	const documentId = await params.documentId;
+	const { documentId } = await params;
 
 	console.log(documentId);
 	return (
