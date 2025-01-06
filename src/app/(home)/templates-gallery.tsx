@@ -50,10 +50,11 @@ export default function TemplatesGallery() {
 										'aspect-[3/4] flex flex-col gap-y-2.5',
 										isCreating && 'pointer-events-none opacity-50'
 									)}>
-									{/* TODO: Add proper initial content */}
 									<button
 										disabled={isCreating}
-										onClick={() => onTemplateClick(template.lable, '')}
+										onClick={() =>
+											onTemplateClick(template.lable, template.initialContent)
+										}
 										style={{
 											backgroundImage: `url(${template.imageUrl})`,
 											backgroundSize: 'cover',

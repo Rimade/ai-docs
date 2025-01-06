@@ -1,16 +1,35 @@
 import { cn } from '@/lib/utils';
 import { useRef, useState } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
+import { useStorage, useMutation } from '@liveblocks/react/suspense';
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margins';
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 
 export const Ruler = () => {
-	const [leftMargin, setLeftMargin] = useState(56);
-	const [rightMargin, setRightMargin] = useState(56);
-
 	const [isDraggingLeft, setIsDraggingLeft] = useState(false);
 	const [isDraggingRight, setIsDraggingRight] = useState(false);
 	const rulerRef = useRef<HTMLDivElement>(null);
+	const leftMargin = useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+	const rightMargin = useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
+
+	const setLeftMargin = useMutation(
+		({ storage }, position: number) => {
+			if (position > 0) storage.set('leftMargin', position);
+		},
+		[leftMargin]
+	);
+
+	const setRightMargin = useMutation(
+		({ storage }, position: number) => {
+			if (position > 0) storage.set('rightMargin', position);
+		},
+		[rightMargin]
+	);
+
+	if (!leftMargin || !rightMargin) {
+		return null;
+	}
 
 	const handleLeftMouseDown = () => {
 		setIsDraggingLeft(true);
@@ -51,10 +70,10 @@ export const Ruler = () => {
 	};
 
 	const handleLeftDoubleClick = () => {
-		setLeftMargin(56);
+		setLeftMargin(LEFT_MARGIN_DEFAULT);
 	};
 	const handleRightDoubleClick = () => {
-		setRightMargin(56);
+		setRightMargin(RIGHT_MARGIN_DEFAULT);
 	};
 
 	return (

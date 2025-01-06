@@ -1,27 +1,37 @@
-import { Editor } from './editor';
-import { Navbar } from './navbar';
-import { Room } from './room';
-import { Toolbar } from './toolbar';
+import { preloadQuery } from 'convex/nextjs';
+import { auth } from '@clerk/nextjs/server';
+import { Id } from '../../../../convex/_generated/dataModel';
+import { Document } from './document';
+import { api } from '../../../../convex/_generated/api';
 
 interface DocumentPageProps {
-	params: { documentId: string };
+	params: Promise<{ documentId: Id<'documents'> }>;
 }
 
+/**
+ * Компонент страницы документа.
+ *
+ * Получает id документа из параметров маршрута.
+ * Берет токен аутентификации из Clerk.
+ * Если токен не получен, выбрасывает ошибку Unauthorized.
+ * Использует preloadQuery для предзагрузки документа из Convex.
+ * Рендерит компонент Document с предзагруженным документом.
+ */
 export default async function DocumentPage({ params }: DocumentPageProps) {
-	const documentId = await params.documentId;
+	const { documentId } = await params;
 
-	console.log(documentId);
-	return (
-		<Room>
-			<div className="min-h-screen bg-[#FAFBFD]">
-				<div className="flex flex-col px-4 pt-2 gap-y-2 sticky top-0 left-0 right-0 z-10 bg-[#FAFBFD] print:hidden">
-					<Navbar />
-					<Toolbar />
-				</div>
-				<div className="print:pt-0 mt-1">
-					<Editor />
-				</div>
-			</div>
-		</Room>
+	const { getToken } = await auth();
+	const token = (await getToken({ template: 'convex' })) ?? undefined;
+
+	if (!token) {
+		throw new Error('Unauthorized');
+	}
+
+	const preloadedDocument = await preloadQuery(
+		api.documents.getById,
+		{ id: documentId },
+		{ token }
 	);
+
+	return <Document preloadedDocument={preloadedDocument} />;
 }
