@@ -56,7 +56,9 @@ export const LineHeightExtension = Extension.create({
 						}
 					});
 
-					dispatch && dispatch(tr);
+					if (dispatch) {
+						dispatch(tr);
+					}
 
 					return true;
 				},
@@ -76,8 +78,9 @@ export const LineHeightExtension = Extension.create({
 						}
 					});
 
-					dispatch && dispatch(tr);
-
+					if (dispatch) {
+						dispatch(tr);
+					}
 					return true;
 				},
 		};

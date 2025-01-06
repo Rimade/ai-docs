@@ -1,7 +1,7 @@
 'use client';
 // Import Dependencies
 import { cn } from '@/lib/utils';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { CirclePicker, SketchPicker, type ColorResult } from 'react-color';
 import { type Level } from '@tiptap/extension-heading';
 import {
