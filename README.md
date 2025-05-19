@@ -30,13 +30,13 @@
 1. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/Rimade/lazy-docs.gitс
+git clone https://github.com/Rimade/ai-docs.gitс
 ```
 
 2. Установите зависимости:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 3. Запустите проект:
