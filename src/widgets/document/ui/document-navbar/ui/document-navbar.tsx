@@ -252,7 +252,7 @@ export const DocumentNavbar: React.FC<DocumentNavbarProps> = ({ data }) => {
   return (
     <nav className="flex items-center justify-between h-14 px-4 bg-white border-b border-neutral-200">
       <div className="flex gap-2 items-center">
-        <Link href="/">
+        <Link href="/" className="shrink-0">
           <Image src="/icons/logo.png" alt="logo" width={36} height={36} />
         </Link>
         <div className="flex flex-col">
@@ -422,6 +422,19 @@ export const DocumentNavbar: React.FC<DocumentNavbarProps> = ({ data }) => {
             <Inbox />
             <TooltipTrigger>
               <OrganizationSwitcher
+                appearance={{
+                  elements: {
+                    organizationSwitcherTrigger: 'text-xl',
+                    organizationPreview: 'md:flex',
+                    organizationSwitcherTriggerIcon: 'block',
+                    organizationSwitcherTriggerOrganizationName: 'md:block',
+                    organizationSwitcherPopoverCard: 'w-full sm:w-auto',
+                    organizationPreviewTextContainer: 'hidden md:flex',
+                    organizationSwitcherPopoverActionButton: 'w-full sm:w-auto',
+                    organizationSwitcherPopoverActionButtonText: 'block',
+                    organizationSwitcherPopoverActionButtonIcon: 'hidden sm:block'
+                  }
+                }}
                 afterCreateOrganizationUrl="/"
                 afterLeaveOrganizationUrl="/"
                 afterSelectOrganizationUrl="/"

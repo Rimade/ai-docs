@@ -14,7 +14,7 @@ export default function Navbar() {
     <nav className="flex justify-between items-center h-full w-full px-4 md:px-8">
       <Link href="/" className="flex gap-2 items-center shrink-0 pr-6">
         <Image src="/icons/logo.png" alt="AI Word" width={36} height={36} />
-        <h3 className="text-xl font-normal">AI Word</h3>
+        <h3 className="text-xl font-normal hidden md:block">AI Word</h3>
       </Link>
       <SearchInput />
       <div className="flex gap-3 items-center shrink-0 pl-6">
@@ -22,6 +22,19 @@ export default function Navbar() {
           <Tooltip>
             <TooltipTrigger>
               <OrganizationSwitcher
+                appearance={{
+                  elements: {
+                    organizationSwitcherTrigger: 'text-xl',
+                    organizationPreview: 'md:flex',
+                    organizationSwitcherTriggerIcon: 'block',
+                    organizationSwitcherTriggerOrganizationName: 'md:block',
+                    organizationSwitcherPopoverCard: 'w-full sm:w-auto',
+                    organizationPreviewTextContainer: 'hidden md:flex',
+                    organizationSwitcherPopoverActionButton: 'w-full sm:w-auto',
+                    organizationSwitcherPopoverActionButtonText: 'block',
+                    organizationSwitcherPopoverActionButtonIcon: 'hidden sm:block'
+                  }
+                }}
                 afterCreateOrganizationUrl="/"
                 afterLeaveOrganizationUrl="/"
                 afterSelectOrganizationUrl="/"
