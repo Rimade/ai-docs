@@ -1,11 +1,11 @@
 import { preloadQuery } from 'convex/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import { Id } from '../../../../convex/_generated/dataModel';
-import { Document } from './document';
+import { Document } from '../../../widgets/document/ui';
 import { api } from '../../../../convex/_generated/api';
 
 interface DocumentPageProps {
-	params: Promise<{ documentId: Id<'documents'> }>;
+  params: Promise<{ documentId: Id<'documents'> }>;
 }
 
 /**
@@ -18,20 +18,20 @@ interface DocumentPageProps {
  * Рендерит компонент Document с предзагруженным документом.
  */
 export default async function DocumentPage({ params }: DocumentPageProps) {
-	const { documentId } = await params;
+  const { documentId } = await params;
 
-	const { getToken } = await auth();
-	const token = (await getToken({ template: 'convex' })) ?? undefined;
+  const { getToken } = await auth();
+  const token = (await getToken({ template: 'convex' })) ?? undefined;
 
-	if (!token) {
-		throw new Error('Unauthorized');
-	}
+  if (!token) {
+    throw new Error('Unauthorized');
+  }
 
-	const preloadedDocument = await preloadQuery(
-		api.documents.getById,
-		{ id: documentId },
-		{ token }
-	);
+  const preloadedDocument = await preloadQuery(
+    api.documents.getById,
+    { id: documentId },
+    { token }
+  );
 
-	return <Document preloadedDocument={preloadedDocument} />;
+  return <Document preloadedDocument={preloadedDocument} />;
 }
