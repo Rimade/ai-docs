@@ -30,7 +30,7 @@
 1. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/Rimade/ai-docs.gitс
+git clone https://github.com/Rimade/ai-word.gitс
 ```
 
 2. Установите зависимости:

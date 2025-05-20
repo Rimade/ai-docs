@@ -41,7 +41,7 @@ export default function DocumentRow({ document }: DocumentRowProps) {
               <SiGoogledocs className="size-6 fill-blue-500" />
             </TooltipTrigger>
             <TooltipContent>
-              <p>Google Docs</p>
+              <p>AI Word</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

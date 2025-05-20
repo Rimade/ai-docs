@@ -429,7 +429,7 @@ export const DocumentNavbar: React.FC<DocumentNavbarProps> = ({ data }) => {
               />
             </TooltipTrigger>
             <TooltipContent>
-              <p>Переключить организацию</p>
+              <p>Change organization</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -439,7 +439,7 @@ export const DocumentNavbar: React.FC<DocumentNavbarProps> = ({ data }) => {
               <UserButton />
             </TooltipTrigger>
             <TooltipContent>
-              <p>Профиль пользователя</p>
+              <p>User&apos;s profile</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

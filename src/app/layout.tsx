@@ -12,8 +12,8 @@ import '@liveblocks/react-tiptap/styles.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AI Docs',
-  description: 'AI Docs is a simple document editor',
+  title: 'AI Word',
+  description: 'AI Word is a simple document editor',
   icons: {
     icon: '/icons/icon.ico'
   }

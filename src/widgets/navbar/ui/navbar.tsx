@@ -13,8 +13,8 @@ export default function Navbar() {
   return (
     <nav className="flex justify-between items-center h-full w-full px-4 md:px-8">
       <Link href="/" className="flex gap-2 items-center shrink-0 pr-6">
-        <Image src="/icons/logo.png" alt="AI Docs" width={36} height={36} />
-        <h3 className="text-xl font-normal">Документы</h3>
+        <Image src="/icons/logo.png" alt="AI Word" width={36} height={36} />
+        <h3 className="text-xl font-normal">AI Word</h3>
       </Link>
       <SearchInput />
       <div className="flex gap-3 items-center shrink-0 pl-6">
@@ -29,7 +29,7 @@ export default function Navbar() {
               />
             </TooltipTrigger>
             <TooltipContent>
-              <p>Переключить организацию</p>
+              <p>Change organization</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -39,7 +39,7 @@ export default function Navbar() {
               <UserButton />
             </TooltipTrigger>
             <TooltipContent>
-              <p>Профиль пользователя</p>
+              <p>User&apos;s profile</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
