@@ -1,3 +1,4 @@
+import { Avatar } from '@/shared/ui/avatar/avatar';
 import { Separator } from '@/shared/ui/separator';
 import { useOthers, useSelf } from '@liveblocks/react/suspense';
 

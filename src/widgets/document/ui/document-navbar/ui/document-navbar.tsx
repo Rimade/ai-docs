@@ -46,7 +46,7 @@ import {
 import { BsFilePdf } from 'react-icons/bs';
 import { DocumentInput } from '@/widgets/document/ui/document-input/ui/document-input';
 import { useEditorStore } from '@/shared/models/stores/use-editor-store';
-import { Editor } from '@tiptap/react';
+import type { Editor } from '@tiptap/react';
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
 import {
   TooltipContent,
@@ -56,7 +56,7 @@ import {
 } from '@/shared/ui/tooltip';
 import { Avatars } from '@/features/avatars';
 import { Inbox } from '@/entities/inbox/ui';
-import { Doc } from '@/../convex/_generated/dataModel';
+import type { Doc } from '@/../convex/_generated/dataModel';
 
 interface PDFOptions {
   orientation: 'portrait' | 'landscape';

@@ -97,17 +97,25 @@
 		"zustand": "^5.0.1"
 	},
 	"devDependencies": {
+		"@eslint/eslintrc": "^3.3.1",
+		"@eslint/js": "^9.27.0",
 		"@feature-sliced/eslint-config": "^0.1.1",
+		"@next/eslint-plugin-next": "^15.3.2",
 		"@types/node": "^20",
 		"@types/react": "^19.0.2",
 		"@types/react-color": "^3.0.12",
 		"@types/react-dom": "^19.0.2",
+		"@typescript-eslint/eslint-plugin": "^8.32.1",
+		"@typescript-eslint/parser": "^8.32.1",
 		"eslint": "^9.17.0",
 		"eslint-config-next": "15.0.3",
 		"eslint-plugin-boundaries": "^5.0.1",
+		"eslint-plugin-import": "^2.31.0",
 		"eslint-plugin-simple-import-sort": "^12.1.1",
 		"postcss": "^8",
 		"tailwindcss": "^3.4.1",
-		"typescript": "^5"
-	}
+		"typescript": "^5",
+		"typescript-eslint": "^8.32.1"
+	},
+	"type": "module"
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import type { ReactNode} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import {
   LiveblocksProvider,
@@ -10,7 +11,7 @@ import {
 import { FullscreenLoader } from '@/shared/ui/full-screen-loader';
 import { getUsers, getDocuments } from '../../../shared/api/actions';
 import { toast } from 'sonner';
-import { Id } from '../../../../convex/_generated/dataModel';
+import type { Id } from '../../../../convex/_generated/dataModel';
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/shared/lib/constants';
 
 type User = {

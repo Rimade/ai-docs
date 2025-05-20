@@ -4,6 +4,8 @@ import { cn } from '@/shared/lib/utils';
 import { useState } from 'react';
 import { CirclePicker, SketchPicker, type ColorResult } from 'react-color';
 import { type Level } from '@tiptap/extension-heading';
+import type {
+  LucideIcon} from 'lucide-react';
 import {
   AlignCenterIcon,
   AlignJustifyIcon,
@@ -19,7 +21,6 @@ import {
   ListIcon,
   ListOrderedIcon,
   ListTodoIcon,
-  LucideIcon,
   MessageSquarePlusIcon,
   MinusIcon,
   PlusIcon,

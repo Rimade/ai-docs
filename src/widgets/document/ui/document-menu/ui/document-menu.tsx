@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger
 } from '@/shared/ui/dropdown-menu';
 import { ExternalLinkIcon, FilePenIcon, MoreVertical, TrashIcon } from 'lucide-react';
-import { Id } from '../../../../../../convex/_generated/dataModel';
+import type { Id } from '../../../../../../convex/_generated/dataModel';
 import { RemoveDialog } from '@/features/remove-dialog';
 import { RenameDialog } from '@/features/rename-dialog';
 

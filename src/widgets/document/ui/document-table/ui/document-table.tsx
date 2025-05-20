@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui/button';
-import { Doc } from '@/../convex/_generated/dataModel';
-import { PaginationStatus } from 'convex/react';
+import type { Doc } from '@/../convex/_generated/dataModel';
+import type { PaginationStatus } from 'convex/react';
 
 import {
   Table,

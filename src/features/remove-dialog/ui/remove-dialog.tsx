@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useMutation } from 'convex/react';
-import { Id } from '../../../../convex/_generated/dataModel';
+import type { Id } from '../../../../convex/_generated/dataModel';
 import { toast } from 'sonner';
 import { api } from '../../../../convex/_generated/api';
 import {
